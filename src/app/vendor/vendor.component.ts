@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomerService } from '../customer.service';
 import { TokenserviceService } from '../tokenservice.service';
+import { VendorService } from '../vendor.service';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.css']
+  selector: 'app-vendor',
+  templateUrl: './vendor.component.html',
+  styleUrls: ['./vendor.component.css']
 })
-export class CustomerComponent implements OnInit {
+export class VendorComponent implements OnInit {
 
   customer:any;
   count:number = 0;
@@ -19,7 +19,7 @@ export class CustomerComponent implements OnInit {
   status= ["INACTIVE" , "ACTIVE"];
 
   constructor(private tokenService:TokenserviceService,
-    private customService:CustomerService,
+    private vendorService:VendorService,
     private router:Router,) { }
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class CustomerComponent implements OnInit {
         "page" : this.pageNo,
         "limit" : this.limit,
       };
-      this.customService.customerList(data).subscribe(data=>{
+      this.vendorService.customerList(data).subscribe(data=>{
           if(data.statusCode == 200){
             this.customer = data.data;
             this.page = data.result;
@@ -52,7 +52,7 @@ export class CustomerComponent implements OnInit {
       "limit" : this.limit,
     }
 
-    this.customService.customerList(data).subscribe(data=> {
+    this.vendorService.customerList(data).subscribe(data=> {
       if(data.statusCode != 200){
         this.validate(data.statusCode);
         alert(data.message);
@@ -69,7 +69,7 @@ export class CustomerComponent implements OnInit {
       "id" : this.customer[index].id,
       "status" : this.customer[index].status
     }
-    this.customService.updateStatus(body).subscribe(data=>{
+    this.vendorService.updateStatus(body).subscribe(data=>{
       if(data.statusCode == 200){
         alert("Success..!! Status Updated");
       }else{
