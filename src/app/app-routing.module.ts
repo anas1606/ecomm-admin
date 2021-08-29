@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CountryComponent } from './country/country.component';
 import { CustomerComponent } from './customer/customer.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
@@ -20,6 +21,10 @@ const routes: Routes = [
   },
   { path: 'vendordetail',
    component: VendorDetailComponent,
+   pathMatch : "full"
+  },
+  { path: 'country',
+   component: CountryComponent,
    pathMatch : "full"
   },
 ];

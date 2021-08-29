@@ -7,6 +7,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
+import { CountryComponent } from './country/country.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
     CustomerComponent,
     VendorComponent,
     UserDetailComponent,
-    VendorDetailComponent
+    VendorDetailComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
