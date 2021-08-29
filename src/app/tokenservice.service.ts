@@ -23,6 +23,22 @@ export class TokenserviceService {
     return localStorage.getItem("name");
   }
 
+  setUserID(id:string){
+    localStorage.setItem("userId",id);
+  }
+
+  getUserId(): any{
+    return localStorage.getItem("userId");
+  }
+
+  setVendorID(id:string){
+    localStorage.setItem("vendorId",id);
+  }
+
+  getVendorId(): any{
+    return localStorage.getItem("vendorId");
+  }
+
   deleteToken(){
     localStorage.removeItem("token")
   }

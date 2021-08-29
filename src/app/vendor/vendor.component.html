@@ -52,27 +52,27 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor = "let c of customer; let i = index ">
+                    <tr *ngFor = "let v of vendor; let i = index ">
                       <td class="pl-4">{{ count + i   }}</td>
                       <td>
-                          <h5 class="font-medium mb-0">{{ c.name }}</h5>
+                          <h5 class="font-medium mb-0">{{ v.name }}</h5>
                       </td>
                       <td>
-                        <span class="text">{{ c.emailid }}</span><br>
+                        <span class="text">{{ v.emailid }}</span><br>
                       </td>
                       <td>
-                        <span class="text">country: {{ c.country }}</span><br>
-                          <span class="text">state: {{ c.state }}</span>
+                        <span class="text">country: {{ v.country }}</span><br>
+                          <span class="text">state: {{ v.state }}</span>
                       </td>
                       <td>
                           <span class="text">15 Mar 1988</span><br>
                       </td>
                       <td class="text-center">
-                        <button type="button" Class = "btn btn-success" *ngIf = "c.status == 1" (click) = "onStatusUpdate(i)"> {{ status[c.status] }} </button>
-                        <button type="button" Class = "btn btn-danger" *ngIf = "c.status == 0" (click) = "onStatusUpdate(i)"> {{ status[c.status] }} </button>
+                        <button type="button" Class = "btn btn-success" *ngIf = "v.status == 1" (click) = "onStatusUpdate(i)"> {{ status[v.status] }} </button>
+                        <button type="button" Class = "btn btn-danger" *ngIf = "v.status == 0" (click) = "onStatusUpdate(i)"> {{ status[v.status] }} </button>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle"><i class="fa fa-eye"></i> </button>
+                        <button type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle" (click) = "onVisit(v.id)"><i class="fa fa-eye"></i> </button>
                         <div class="btn"> </div>
                         <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle"><i class="fa fa-trash"></i> </button>
                       </td>

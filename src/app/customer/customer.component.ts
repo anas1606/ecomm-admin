@@ -59,6 +59,7 @@ export class CustomerComponent implements OnInit {
       }else{
         this.customer = data.data;
         this.page = data.result;
+        this.count = this.page.pageno * this.limit + 1;
       }
     });
   }
@@ -79,13 +80,18 @@ export class CustomerComponent implements OnInit {
     });
   }
 
+  onVisit(id:string){
+    this.tokenService.setUserID(id);
+    this.router.navigate(["/userdetail"]);
+  }
+
   counter(i: number) {
     return new Array(i);
   }
 
   validate(code:any){
     if(code == 401)
-      this.router.navigate(["/vendor/login"]);
+      this.router.navigate(["/login"]);
   }
 
 }

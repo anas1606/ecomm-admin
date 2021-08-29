@@ -10,7 +10,7 @@ import { VendorService } from '../vendor.service';
 })
 export class VendorComponent implements OnInit {
 
-  customer:any;
+  vendor:any;
   count:number = 0;
   page:any;
   limit:number = 1;
@@ -33,7 +33,7 @@ export class VendorComponent implements OnInit {
       };
       this.vendorService.customerList(data).subscribe(data=>{
           if(data.statusCode == 200){
-            this.customer = data.data;
+            this.vendor = data.data;
             this.page = data.result;
             this.count = this.page.pageno * this.limit + 1;
           }else{
@@ -57,17 +57,17 @@ export class VendorComponent implements OnInit {
         this.validate(data.statusCode);
         alert(data.message);
       }else{
-        this.customer = data.data;
+        this.vendor = data.data;
         this.page = data.result;
       }
     });
   }
 
   onStatusUpdate(index:number){
-    this.customer[index].status = (this.customer[index].status == "1") ? 0 : 1;
+    this.vendor[index].status = (this.vendor[index].status == "1") ? 0 : 1;
     const body = {
-      "id" : this.customer[index].id,
-      "status" : this.customer[index].status
+      "id" : this.vendor[index].id,
+      "status" : this.vendor[index].status
     }
     this.vendorService.updateStatus(body).subscribe(data=>{
       if(data.statusCode == 200){
@@ -77,6 +77,11 @@ export class VendorComponent implements OnInit {
         alert(data.message);
       }
     });
+  }
+
+  onVisit(id:string){
+    this.tokenService.setVendorID(id);
+    this.router.navigate(["/vendordetail"]);
   }
 
   counter(i: number) {

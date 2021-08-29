@@ -21,4 +21,12 @@ export class VendorService {
     return this.http.put<any>('http://localhost:8080/api/admin/vendor', body, { headers });
   }
 
+  vendorProfile(){
+    const id = this.tokenService.getVendorId();
+    console.log(id);
+    //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
+    const headers = {'Content-Type': 'application/json'};
+    return this.http.get<any>('http://localhost:8080/api/admin/vendor/'+id, { headers });
+  }
+
 }
