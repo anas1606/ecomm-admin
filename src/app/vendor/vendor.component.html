@@ -16,20 +16,19 @@
                   <tr>
                     <td scope="col" class="border-0 text-uppercase font-medium pl-2">Filter</td>
                     <td>
-                      <select class="form-control category-select" id="exampleFormControlSelect1">
+                      <select class="form-control category-select" id="exampleFormControlSelect1" (change)="onStatusFilter($event)">
                         <option>All options</option>
-                        <option>Admin</option>
-                        <option>User</option>
-                        <option>Subscriber</option>
+                        <option>ACTIVE</option>
+                        <option>INACTIVE</option>
                       </select>
                     </td>
 
                     <td>
                       <div class="input-group">
                         <div class="form-outline">
-                          <input type="search" id="form1" class="form-control" placeholder = "Search"/>
+                          <input type="search" #search id="form1" class="form-control" placeholder = "Search" (change)= "searchWord = search.value "/>
                         </div>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" (click) = "onSearch(search.value)">
                           <i class="fas fa-search"></i>
                         </button>
                       </div>
@@ -44,7 +43,7 @@
                     <tr>
                       <th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
-                      <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">company Name</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Location</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Added</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
@@ -58,7 +57,7 @@
                           <h5 class="font-medium mb-0">{{ v.name }}</h5>
                       </td>
                       <td>
-                        <span class="text">{{ v.emailid }}</span><br>
+                        <span class="text">{{ v.companyName }}</span><br>
                       </td>
                       <td>
                         <span class="text">country: {{ v.country }}</span><br>
@@ -89,7 +88,7 @@
                 </li>
               </ul>
             </nav>
-            <label class="page-item disabled"> Total Vendor: {{ page.totalCount }} </label>
+            <label class="page-item disabled"> Total Vendors: {{ page.totalCount }} </label>
         </div>
     </div>
 </div>

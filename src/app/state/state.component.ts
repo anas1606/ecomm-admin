@@ -1,23 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CountryService } from '../country.service';
+import { StateService } from '../state.service';
 import { TokenserviceService } from '../tokenservice.service';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  selector: 'app-state',
+  templateUrl: './state.component.html',
+  styleUrls: ['./state.component.css']
 })
-export class CountryComponent implements OnInit {
+export class StateComponent implements OnInit {
 
-  country: any;
+  state: any;
   count: number = 1;
   status = ["INACTIVE", "ACTIVE"];
   isEdit: boolean = false;
   editIndex: number = -1;
+  country: any;
+  countryid: string = "";
 
   constructor(private tokenService: TokenserviceService,
-    private countryService: CountryService,
+    private stateService: StateService,
+    private counterService: CountryService,
     private router: Router,
   ) { }
 
@@ -25,9 +29,18 @@ export class CountryComponent implements OnInit {
     if (this.tokenService.getToken() != null) {
       //this.router.navigate(["/login"]);
     } else {
-      this.countryService.countryList().subscribe(data => {
+
+      this.counterService.countryList().subscribe(data => {
         if (data.statusCode == 200) {
           this.country = data.data;
+        } else {
+          this.validate(data.statusCode);
+        }
+      });
+
+      this.stateService.stateList().subscribe(data => {
+        if (data.statusCode == 200) {
+          this.state = data.data;
         } else {
           this.validate(data.statusCode);
           alert(data.message);
@@ -37,24 +50,24 @@ export class CountryComponent implements OnInit {
   }
 
   onPageChange(page: any) {
-    this.countryService.countryList().subscribe(data => {
+    this.stateService.stateList().subscribe(data => {
       if (data.statusCode != 200) {
         this.validate(data.statusCode);
         alert(data.message);
       } else {
-        this.country = data.data;
+        this.state = data.data;
       }
     });
   }
 
   onStatusUpdate(index: number) {
-    this.country[index].status = (this.country[index].status == "1") ? 0 : 1;
+    this.state[index].status = (this.state[index].status == "1") ? 0 : 1;
     const body = {
-      "id": this.country[index].id,
-      "name": this.country[index].name,
-      "status": this.country[index].status
+      "id": this.state[index].id,
+      "name": this.state[index].name,
+      "status": this.state[index].status
     }
-    this.countryService.updateStatus(body).subscribe(data => {
+    this.stateService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
       } else {
@@ -69,16 +82,17 @@ export class CountryComponent implements OnInit {
     this.isEdit = true;
   }
 
-  onEdit(index: number, name: string) {
+  onEdit(index: number, state: any, name: string) {
     if (name != "" && name.charAt(0) != " ") {
       const body = {
-        "id": this.country[index].id,
+        "id": state.id,
         "name": name,
-        "status": this.country[index].status
-      }
-      this.countryService.updateStatus(body).subscribe(data => {
+        "status": state.status,
+      };
+
+      this.stateService.updateStatus(body).subscribe(data => {
         if (data.statusCode == 200)
-          this.country[index].name = name;
+          this.state[index].name = name;
         this.validate(data.statusCode);
         alert(data.message);
         this.isEdit = false;
@@ -90,15 +104,29 @@ export class CountryComponent implements OnInit {
   }
 
   onAdd(name: string) {
-    if (name != "" && name.charAt(0) != " ") {
-      this.countryService.addCountry(name).subscribe(data => {
-        this.validate(data.statusCode);
-        alert(data.message);
-        window.location.reload();
-      });
+    if (this.countryid != "") {
+      if (name != "" && name.charAt(0) != " ") {
+        const data = {
+          "countryId": this.countryid,
+          "name": name
+        };
+
+        this.stateService.addState(data).subscribe(data => {
+          this.validate(data.statusCode);
+          alert(data.message);
+          window.location.reload();
+        });
+
+      } else {
+        alert("White Space Not Allowed");
+      }
     } else {
-      alert("White Space Not Allowed");
+      alert("Select Country First");
     }
+  }
+
+  onCountryChange(event: any) {
+    this.countryid = (event.target.value != "Country") ? event.target.value : "";
   }
 
   counter(i: number) {

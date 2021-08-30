@@ -8,6 +8,9 @@ import { VendorComponent } from './vendor/vendor.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { VendorDetailComponent } from './vendor-detail/vendor-detail.component';
 import { CountryComponent } from './country/country.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { StateComponent } from './state/state.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { CountryComponent } from './country/country.component';
     VendorComponent,
     UserDetailComponent,
     VendorDetailComponent,
-    CountryComponent
+    CountryComponent,
+    HeaderComponent,
+    FooterComponent,
+    StateComponent
   ],
   imports: [
     BrowserModule,

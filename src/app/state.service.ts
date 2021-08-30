@@ -4,26 +4,25 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class StateService {
 
   constructor(private http: HttpClient) { }
 
-  countryList() {
+  stateList() {
     //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
     const headers = { 'Content-Type': 'application/json' };
-    return this.http.get<any>('http://localhost:8080/api/admin/country', { headers });
+    return this.http.get<any>('http://localhost:8080/api/admin/state', { headers });
   }
 
   updateStatus(body: any) {
     //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
     const headers = { 'Content-Type': 'application/json' };
-    return this.http.put<any>('http://localhost:8080/api/admin/country', body, { headers });
+    return this.http.put<any>('http://localhost:8080/api/admin/state', body, { headers });
   }
 
-  addCountry(name: any) {
+  addState(data: any) {
     //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
     const headers = { 'Content-Type': 'application/json' };
-    return this.http.post<any>('http://localhost:8080/api/admin/country/' + name, { headers });
+    return this.http.post<any>('http://localhost:8080/api/admin/state' , data, { headers });
   }
-
 }

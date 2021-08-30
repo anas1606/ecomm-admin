@@ -33,4 +33,10 @@ export class CustomerService {
     const headers = {'Content-Type': 'application/json'};
     return this.http.get<any>('http://localhost:8080/api/admin/customer/'+id, { headers });
   }
+
+  delete (id:string){
+    //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
+    const headers = {'Content-Type': 'application/json'};
+    return this.http.delete<any>('http://localhost:8080/api/admin/customer/'+id, { headers });
+  }
 }

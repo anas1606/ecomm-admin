@@ -16,20 +16,19 @@
                   <tr>
                     <td scope="col" class="border-0 text-uppercase font-medium pl-2">Filter</td>
                     <td>
-                      <select class="form-control category-select" id="exampleFormControlSelect1">
+                      <select class="form-control category-select" id="exampleFormControlSelect1" (change)="onStatusFilter($event)">
                         <option>All options</option>
-                        <option>Admin</option>
-                        <option>User</option>
-                        <option>Subscriber</option>
+                        <option>ACTIVE</option>
+                        <option>INACTIVE</option>
                       </select>
                     </td>
 
                     <td>
                       <div class="input-group">
                         <div class="form-outline">
-                          <input type="search" id="form1" class="form-control" placeholder = "Search"/>
+                          <input type="search" #search id="form1" class="form-control" placeholder = "Search" (change)= "searchWord = search.value "/>
                         </div>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" (click) = "onSearch(search.value)">
                           <i class="fas fa-search"></i>
                         </button>
                       </div>
@@ -74,7 +73,7 @@
                       <td>
                         <button type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle" (click) = "onVisit(c.id)"><i class="fa fa-eye"></i> </button>
                         <div class="btn"> </div>
-                        <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle"><i class="fa fa-trash"></i> </button>
+                        <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle" (click) = "onDelete(c.id)"><i class="fa fa-trash"></i> </button>
                       </td>
                     </tr>
                   </tbody>

@@ -10,76 +10,89 @@ import { VendorService } from '../vendor.service';
 })
 export class VendorComponent implements OnInit {
 
-  vendor:any;
-  count:number = 0;
-  page:any;
-  limit:number = 1;
-  pageNo:number  = 0;
-  categoryfilter:string = ""
-  status= ["INACTIVE" , "ACTIVE"];
+  vendor: any;
+  count: number = 0;
+  page: any;
+  limit: number = 1;
+  pageNo: number = 0;
+  categoryfilter: string = ""
+  status = ["INACTIVE", "ACTIVE"];
+  searchWord: string = "";
+  filterStatus: number = -1
 
-  constructor(private tokenService:TokenserviceService,
-    private vendorService:VendorService,
-    private router:Router,) { }
+  constructor(private tokenService: TokenserviceService,
+    private vendorService: VendorService,
+    private router: Router,) { }
 
   ngOnInit(): void {
-    if(this.tokenService.getToken() != null){
+    if (this.tokenService.getToken() != null) {
       //this.router.navigate(["/login"]);
-    }else{
-
+    } else {
       const data = {
-        "page" : this.pageNo,
-        "limit" : this.limit,
+        "page": this.pageNo,
+        "limit": this.limit,
+        "searchKeyword": this.searchWord,
+        "sortFileld": "",
+        "status": this.filterStatus
       };
-      this.vendorService.customerList(data).subscribe(data=>{
-          if(data.statusCode == 200){
-            this.vendor = data.data;
-            this.page = data.result;
-            this.count = this.page.pageno * this.limit + 1;
-          }else{
-            this.validate(data.statusCode);
-            alert(data.message);
-          }
-      });
+      this.listingApiCall(data);
     }
   }
 
-  onPageChange(page:any){
-
+  onPageChange(page: any) {
     this.pageNo = page;
     const data = {
-      "page" : this.pageNo,
-      "limit" : this.limit,
+      "page": this.pageNo,
+      "limit": this.limit,
+      "searchKeyword": this.searchWord,
+      "sortFileld": "",
+      "status": this.filterStatus
     }
-
-    this.vendorService.customerList(data).subscribe(data=> {
-      if(data.statusCode != 200){
-        this.validate(data.statusCode);
-        alert(data.message);
-      }else{
-        this.vendor = data.data;
-        this.page = data.result;
-      }
-    });
+    this.listingApiCall(data);
   }
 
-  onStatusUpdate(index:number){
+  onStatusUpdate(index: number) {
     this.vendor[index].status = (this.vendor[index].status == "1") ? 0 : 1;
     const body = {
-      "id" : this.vendor[index].id,
-      "status" : this.vendor[index].status
+      "id": this.vendor[index].id,
+      "status": this.vendor[index].status
     }
-    this.vendorService.updateStatus(body).subscribe(data=>{
-      if(data.statusCode == 200){
+    this.vendorService.updateStatus(body).subscribe(data => {
+      if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
-      }else{
+      } else {
         this.validate(data.statusCode);
         alert(data.message);
       }
     });
   }
 
-  onVisit(id:string){
+  onSearch(search: string) {
+    this.searchWord = search;
+    const data = {
+      "page": this.pageNo,
+      "limit": this.limit,
+      "searchKeyword": this.searchWord,
+      "sortFileld": "",
+      "status": this.filterStatus
+    };
+    this.listingApiCall(data);
+  }
+
+  onStatusFilter(event: any) {
+    this.filterStatus = this.status.indexOf(event.target.value);
+    this.pageNo = 0;
+    const data = {
+      "page": this.pageNo,
+      "limit": this.limit,
+      "searchKeyword": this.searchWord,
+      "sortFileld": "",
+      "status": this.filterStatus
+    };
+    this.listingApiCall(data);
+  }
+
+  onVisit(id: string) {
     this.tokenService.setVendorID(id);
     this.router.navigate(["/vendordetail"]);
   }
@@ -88,8 +101,21 @@ export class VendorComponent implements OnInit {
     return new Array(i);
   }
 
-  validate(code:any){
-    if(code == 401)
+  private listingApiCall(data: any) {
+    this.vendorService.customerList(data).subscribe(data => {
+      if (data.statusCode == 200) {
+        this.vendor = data.data;
+        this.page = data.result;
+        this.count = this.page.pageno * this.limit + 1;
+      } else {
+        this.validate(data.statusCode);
+        alert(data.message);
+      }
+    });
+  }
+
+  private validate(code: any) {
+    if (code == 401)
       this.router.navigate(["/vendor/login"]);
   }
 
