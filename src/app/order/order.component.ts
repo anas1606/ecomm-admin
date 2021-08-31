@@ -13,7 +13,7 @@ export class OrderComponent implements OnInit {
   order: any;
   count: number = 0;
   page: any;
-  limit: number = 1;
+  limit: number = 3;
   pageNo: number = 0;
   categoryfilter: string = ""
   status = ["INACTIVE", "ACTIVE"];
