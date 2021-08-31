@@ -116,6 +116,15 @@
                 <p>{{ vendor.pincode }}</p>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label> Email Verified </label>
+              </div>
+              <div class="col-md-6">
+                <p type="button" Class = "btn btn-success text-light" *ngIf = "vendor.emailVerified"> Verified </p>
+                <p type="button" Class = "btn btn-danger text-light" *ngIf = "!vendor.emailVerified"> Not Verified </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
