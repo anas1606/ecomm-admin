@@ -61,15 +61,16 @@ export class StateComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.state[index].status = (this.state[index].status == "1") ? 0 : 1;
+    const status = (this.state[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.state[index].id,
       "name": this.state[index].name,
-      "status": this.state[index].status
+      "status": status
     }
     this.stateService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.state[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

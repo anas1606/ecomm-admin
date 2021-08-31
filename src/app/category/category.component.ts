@@ -48,15 +48,16 @@ export class CategoryComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.category[index].status = (this.category[index].status == "1") ? 0 : 1;
+    const status = (this.category[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.category[index].id,
       "name": this.category[index].name,
-      "status": this.category[index].status
+      "status": status
     }
     this.categoryService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.category[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

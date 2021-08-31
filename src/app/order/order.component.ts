@@ -53,14 +53,15 @@ export class OrderComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.order[index].status = (this.order[index].status == "1") ? 0 : 1;
+    const status = (this.order[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.order[index].id,
-      "status": this.order[index].status
+      "status": status
     }
     this.orderService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.order[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

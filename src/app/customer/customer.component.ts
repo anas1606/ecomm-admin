@@ -52,14 +52,15 @@ export class CustomerComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.customer[index].status = (this.customer[index].status == "1") ? 0 : 1;
+    const status = (this.customer[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.customer[index].id,
-      "status": this.customer[index].status
+      "status": status
     }
     this.customService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.customer[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

@@ -48,15 +48,16 @@ export class CountryComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.country[index].status = (this.country[index].status == "1") ? 0 : 1;
+    const status = (this.country[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.country[index].id,
       "name": this.country[index].name,
-      "status": this.country[index].status
+      "status": status
     }
     this.countryService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.country[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

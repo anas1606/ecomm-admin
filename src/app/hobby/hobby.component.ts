@@ -48,15 +48,16 @@ export class HobbyComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.hobby[index].status = (this.hobby[index].status == "1") ? 0 : 1;
+    const status = (this.hobby[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.hobby[index].id,
       "name": this.hobby[index].name,
-      "status": this.hobby[index].status
+      "status": status
     }
     this.hobbyService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.hobby[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

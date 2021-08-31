@@ -52,14 +52,15 @@ export class VendorComponent implements OnInit {
   }
 
   onStatusUpdate(index: number) {
-    this.vendor[index].status = (this.vendor[index].status == "1") ? 0 : 1;
+    const status = (this.vendor[index].status == "1") ? 0 : 1;
     const body = {
       "id": this.vendor[index].id,
-      "status": this.vendor[index].status
+      "status": status
     }
     this.vendorService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
+        this.vendor[index].status = status;
       } else {
         this.validate(data.statusCode);
         alert(data.message);
