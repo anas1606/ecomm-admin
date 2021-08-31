@@ -1,0 +1,9 @@
+.login,
+.image {
+  min-height: 100vh;
+}
+.bg-image {
+  background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/trust-me-im-admin-funny-gift-idea-funny-gift-ideas.jpg');
+  background-size: cover;
+  background-position: center center;
+}

@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CountryService } from '../country.service';
+import { CategoryService } from '../category.service';
 import { TokenserviceService } from '../tokenservice.service';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.css']
 })
-export class CountryComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
-  country: any;
+  category: any;
   count: number = 1;
   status = ["INACTIVE", "ACTIVE"];
   isEdit: boolean = false;
   editIndex: number = -1;
 
   constructor(private tokenService: TokenserviceService,
-    private countryService: CountryService,
+    private categoryService: CategoryService,
     private router: Router,
   ) { }
 
@@ -25,9 +25,9 @@ export class CountryComponent implements OnInit {
     if (this.tokenService.getToken() == null) {
       this.router.navigate(["/login"]);
     } else {
-      this.countryService.countryList().subscribe(data => {
+      this.categoryService.categoryList().subscribe(data => {
         if (data.statusCode == 200) {
-          this.country = data.data;
+          this.category = data.data;
         } else {
           this.validate(data.statusCode);
           alert(data.message);
@@ -37,24 +37,24 @@ export class CountryComponent implements OnInit {
   }
 
   onPageChange(page: any) {
-    this.countryService.countryList().subscribe(data => {
+    this.categoryService.categoryList().subscribe(data => {
       if (data.statusCode != 200) {
         this.validate(data.statusCode);
         alert(data.message);
       } else {
-        this.country = data.data;
+        this.category = data.data;
       }
     });
   }
 
   onStatusUpdate(index: number) {
-    this.country[index].status = (this.country[index].status == "1") ? 0 : 1;
+    this.category[index].status = (this.category[index].status == "1") ? 0 : 1;
     const body = {
-      "id": this.country[index].id,
-      "name": this.country[index].name,
-      "status": this.country[index].status
+      "id": this.category[index].id,
+      "name": this.category[index].name,
+      "status": this.category[index].status
     }
-    this.countryService.updateStatus(body).subscribe(data => {
+    this.categoryService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
       } else {
@@ -72,13 +72,13 @@ export class CountryComponent implements OnInit {
   onEdit(index: number, name: string) {
     if (name != "" && name.charAt(0) != " ") {
       const body = {
-        "id": this.country[index].id,
+        "id": this.category[index].id,
         "name": name,
-        "status": this.country[index].status
+        "status": this.category[index].status
       }
-      this.countryService.updateStatus(body).subscribe(data => {
+      this.categoryService.updateStatus(body).subscribe(data => {
         if (data.statusCode == 200)
-          this.country[index].name = name;
+          this.category[index].name = name;
         this.validate(data.statusCode);
         alert(data.message);
         this.isEdit = false;
@@ -91,7 +91,7 @@ export class CountryComponent implements OnInit {
 
   onAdd(name: string) {
     if (name != "" && name.charAt(0) != " ") {
-      this.countryService.addCountry(name).subscribe(data => {
+      this.categoryService.addCategory(name).subscribe(data => {
         this.validate(data.statusCode);
         alert(data.message);
         window.location.reload();

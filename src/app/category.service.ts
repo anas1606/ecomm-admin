@@ -1,28 +1,27 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { TokenserviceService } from './tokenservice.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class CategoryService {
 
   constructor(private http: HttpClient,
     private tokenService: TokenserviceService) { }
 
-  countryList() {
+  categoryList() {
     const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    return this.http.get<any>('http://localhost:8080/api/admin/country', { headers });
+    return this.http.get<any>('http://localhost:8080/api/admin/category', { headers });
   }
 
   updateStatus(body: any) {
     const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    return this.http.put<any>('http://localhost:8080/api/admin/country', body, { headers });
+    return this.http.put<any>('http://localhost:8080/api/admin/category', body, { headers });
   }
 
-  addCountry(name: any) {
+  addCategory(name: any) {
     const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    return this.http.post<any>('http://localhost:8080/api/admin/country/' + name, {} , { headers });
+    return this.http.post<any>('http://localhost:8080/api/admin/category/' + name,{}, { headers });
   }
-
 }

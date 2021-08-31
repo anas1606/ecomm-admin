@@ -20,8 +20,8 @@ export class UserDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.tokenService.getToken() != null) {
-      //this.router.navigate(["/login"]);
+    if (this.tokenService.getToken() == null) {
+      this.router.navigate(["/login"]);
     } else {
       this.customerservice.customerProfile().subscribe(data => {
         if (data.statusCode == 200) {

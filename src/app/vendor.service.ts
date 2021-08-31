@@ -10,22 +10,29 @@ export class VendorService {
   constructor(private tokenService:TokenserviceService,
     private http:HttpClient) { }
 
-  customerList (data:any){
-    //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    const headers = {'Content-Type': 'application/json'};
+  vendorList (data:any){
+    const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
     return this.http.post<any>('http://localhost:8080/api/admin/vendor/list', data, { headers });
   }
 
+  productList (data:any){
+    const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
+    return this.http.post<any>('http://localhost:8080/api/admin/vendor/product/list', data, { headers });
+  }
+
   updateStatus (body:any){
-    const headers = {'Content-Type': 'application/json'};
+    const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
     return this.http.put<any>('http://localhost:8080/api/admin/vendor', body, { headers });
+  }
+
+  updateProductStatus (body:any){
+    const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
+    return this.http.put<any>('http://localhost:8080/api/admin/vendor/product', body, { headers });
   }
 
   vendorProfile(){
     const id = this.tokenService.getVendorId();
-    console.log(id);
-    //const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    const headers = {'Content-Type': 'application/json'};
+    const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
     return this.http.get<any>('http://localhost:8080/api/admin/vendor/'+id, { headers });
   }
 

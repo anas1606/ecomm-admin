@@ -45,7 +45,7 @@
                       <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Location</th>
-                      <th scope="col" class="border-0 text-uppercase font-medium">Added</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Join On</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
                     </tr>
@@ -64,7 +64,7 @@
                           <span class="text">state: {{ c.state }}</span>
                       </td>
                       <td>
-                          <span class="text">15 Mar 1988</span><br>
+                          <span class="text">{{ c.createdAt.substring(0,10) }}</span><br>
                       </td>
                       <td class="text-center">
                         <button type="button" Class = "btn btn-success" *ngIf = "c.status == 1" (click) = "onStatusUpdate(i)"> {{ status[c.status] }} </button>

@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CountryService } from '../country.service';
+import { HobbyService } from '../hobby.service';
 import { TokenserviceService } from '../tokenservice.service';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  selector: 'app-hobby',
+  templateUrl: './hobby.component.html',
+  styleUrls: ['./hobby.component.css']
 })
-export class CountryComponent implements OnInit {
+export class HobbyComponent implements OnInit {
 
-  country: any;
+  hobby: any;
   count: number = 1;
   status = ["INACTIVE", "ACTIVE"];
   isEdit: boolean = false;
   editIndex: number = -1;
 
   constructor(private tokenService: TokenserviceService,
-    private countryService: CountryService,
+    private hobbyService: HobbyService,
     private router: Router,
   ) { }
 
@@ -25,9 +25,9 @@ export class CountryComponent implements OnInit {
     if (this.tokenService.getToken() == null) {
       this.router.navigate(["/login"]);
     } else {
-      this.countryService.countryList().subscribe(data => {
+      this.hobbyService.hobbyList().subscribe(data => {
         if (data.statusCode == 200) {
-          this.country = data.data;
+          this.hobby = data.data;
         } else {
           this.validate(data.statusCode);
           alert(data.message);
@@ -37,24 +37,24 @@ export class CountryComponent implements OnInit {
   }
 
   onPageChange(page: any) {
-    this.countryService.countryList().subscribe(data => {
+    this.hobbyService.hobbyList().subscribe(data => {
       if (data.statusCode != 200) {
         this.validate(data.statusCode);
         alert(data.message);
       } else {
-        this.country = data.data;
+        this.hobby = data.data;
       }
     });
   }
 
   onStatusUpdate(index: number) {
-    this.country[index].status = (this.country[index].status == "1") ? 0 : 1;
+    this.hobby[index].status = (this.hobby[index].status == "1") ? 0 : 1;
     const body = {
-      "id": this.country[index].id,
-      "name": this.country[index].name,
-      "status": this.country[index].status
+      "id": this.hobby[index].id,
+      "name": this.hobby[index].name,
+      "status": this.hobby[index].status
     }
-    this.countryService.updateStatus(body).subscribe(data => {
+    this.hobbyService.updateStatus(body).subscribe(data => {
       if (data.statusCode == 200) {
         alert("Success..!! Status Updated");
       } else {
@@ -72,13 +72,13 @@ export class CountryComponent implements OnInit {
   onEdit(index: number, name: string) {
     if (name != "" && name.charAt(0) != " ") {
       const body = {
-        "id": this.country[index].id,
+        "id": this.hobby[index].id,
         "name": name,
-        "status": this.country[index].status
+        "status": this.hobby[index].status
       }
-      this.countryService.updateStatus(body).subscribe(data => {
+      this.hobbyService.updateStatus(body).subscribe(data => {
         if (data.statusCode == 200)
-          this.country[index].name = name;
+          this.hobby[index].name = name;
         this.validate(data.statusCode);
         alert(data.message);
         this.isEdit = false;
@@ -91,7 +91,7 @@ export class CountryComponent implements OnInit {
 
   onAdd(name: string) {
     if (name != "" && name.charAt(0) != " ") {
-      this.countryService.addCountry(name).subscribe(data => {
+      this.hobbyService.addHobby(name).subscribe(data => {
         this.validate(data.statusCode);
         alert(data.message);
         window.location.reload();
@@ -109,5 +109,4 @@ export class CountryComponent implements OnInit {
     if (code == 401)
       this.router.navigate(["/login"]);
   }
-
 }

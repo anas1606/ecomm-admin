@@ -26,8 +26,8 @@ export class StateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.tokenService.getToken() != null) {
-      //this.router.navigate(["/login"]);
+    if (this.tokenService.getToken() == null) {
+      this.router.navigate(["/login"]);
     } else {
 
       this.counterService.countryList().subscribe(data => {

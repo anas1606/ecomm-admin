@@ -13,7 +13,7 @@ export class VendorComponent implements OnInit {
   vendor: any;
   count: number = 0;
   page: any;
-  limit: number = 1;
+  limit: number = 4;
   pageNo: number = 0;
   categoryfilter: string = ""
   status = ["INACTIVE", "ACTIVE"];
@@ -25,8 +25,8 @@ export class VendorComponent implements OnInit {
     private router: Router,) { }
 
   ngOnInit(): void {
-    if (this.tokenService.getToken() != null) {
-      //this.router.navigate(["/login"]);
+    if (this.tokenService.getToken() == null) {
+      this.router.navigate(["/login"]);
     } else {
       const data = {
         "page": this.pageNo,
@@ -102,7 +102,7 @@ export class VendorComponent implements OnInit {
   }
 
   private listingApiCall(data: any) {
-    this.vendorService.customerList(data).subscribe(data => {
+    this.vendorService.vendorList(data).subscribe(data => {
       if (data.statusCode == 200) {
         this.vendor = data.data;
         this.page = data.result;

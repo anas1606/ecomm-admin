@@ -11,6 +11,10 @@ import { CountryComponent } from './country/country.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { StateComponent } from './state/state.component';
+import { LoginComponent } from './login/login.component';
+import { HobbyComponent } from './hobby/hobby.component';
+import { CategoryComponent } from './category/category.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { StateComponent } from './state/state.component';
     CountryComponent,
     HeaderComponent,
     FooterComponent,
-    StateComponent
+    StateComponent,
+    LoginComponent,
+    HobbyComponent,
+    CategoryComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

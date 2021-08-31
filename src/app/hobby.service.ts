@@ -5,24 +5,23 @@ import { TokenserviceService } from './tokenservice.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class HobbyService {
 
   constructor(private http: HttpClient,
     private tokenService: TokenserviceService) { }
 
-  countryList() {
+  hobbyList() {
     const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    return this.http.get<any>('http://localhost:8080/api/admin/country', { headers });
+    return this.http.get<any>('http://localhost:8080/api/admin/hobby', { headers });
   }
 
   updateStatus(body: any) {
     const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    return this.http.put<any>('http://localhost:8080/api/admin/country', body, { headers });
+    return this.http.put<any>('http://localhost:8080/api/admin/hobby', body, { headers });
   }
 
-  addCountry(name: any) {
+  addHobby(name: any) {
     const headers = {'Content-Type': 'application/json' , 'Authorization' : this.tokenService.getToken()};
-    return this.http.post<any>('http://localhost:8080/api/admin/country/' + name, {} , { headers });
+    return this.http.post<any>('http://localhost:8080/api/admin/hobby/' + name,{}, { headers });
   }
-
 }

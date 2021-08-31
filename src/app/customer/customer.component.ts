@@ -25,8 +25,8 @@ export class CustomerComponent implements OnInit {
     private router: Router,) { }
 
   ngOnInit(): void {
-    if (this.tokenService.getToken() != null) {
-      //this.router.navigate(["/login"]);
+    if (this.tokenService.getToken() == null) {
+      this.router.navigate(["/login"]);
     } else {
       const data = {
         "page": this.pageNo,
@@ -100,6 +100,7 @@ export class CustomerComponent implements OnInit {
   onDelete(id:string){
     this.customService.delete(id).subscribe(data=>{
       alert(data.message);
+      window.location.reload();
     });
   }
 
