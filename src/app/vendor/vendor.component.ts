@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {MatSort} from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TokenserviceService } from '../tokenservice.service';
 import { VendorService } from '../vendor.service';
@@ -10,19 +12,24 @@ import { VendorService } from '../vendor.service';
 })
 export class VendorComponent implements OnInit {
 
-  vendor: any;
+  @ViewChild(MatSort, { static: true })sort: MatSort;
+  vendor: any ;
   count: number = 0;
   page: any;
   limit: number = 4;
   pageNo: number = 0;
-  categoryfilter: string = ""
+  categoryfilter: string = "";
   status = ["INACTIVE", "ACTIVE"];
   searchWord: string = "";
   filterStatus: number = -1
+  datasource: MatTableDataSource<any>;
+  columns: string[] = ['#', 'name' , 'companyName' , 'country' , 'createdAt' , 'status' , 'Manage'];
 
   constructor(private tokenService: TokenserviceService,
     private vendorService: VendorService,
-    private router: Router,) { }
+    private router: Router,) { 
+      this.datasource = new MatTableDataSource(this.vendor);
+    }
 
   ngOnInit(): void {
     if (this.tokenService.getToken() == null) {
@@ -35,7 +42,7 @@ export class VendorComponent implements OnInit {
         "sortFileld": "",
         "status": this.filterStatus
       };
-      this.listingApiCall(data);
+      this.listingApiCall(data);  
     }
   }
 
@@ -108,6 +115,8 @@ export class VendorComponent implements OnInit {
         this.vendor = data.data;
         this.page = data.result;
         this.count = this.page.pageno * this.limit + 1;
+        this.datasource = new MatTableDataSource(this.vendor);
+        this.datasource.sort = this.sort;
       } else {
         this.validate(data.statusCode);
         alert(data.message);

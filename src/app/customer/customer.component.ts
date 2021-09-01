@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from '../customer.service';
 import { TokenserviceService } from '../tokenservice.service';
+import {MatSort} from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-customer',
@@ -10,15 +12,19 @@ import { TokenserviceService } from '../tokenservice.service';
 })
 export class CustomerComponent implements OnInit {
 
+  @ViewChild(MatSort, { static: true })sort: MatSort;
+
   customer: any;
   count: number = 0;
   page: any;
-  limit: number = 1;
+  limit: number = 2;
   pageNo: number = 0;
   categoryfilter: string = ""
   status = ["INACTIVE", "ACTIVE"];
   searchWord: string = "";
   filterStatus: number = -1;
+  datasource: MatTableDataSource<any>;
+  columns: string[] = ['#', 'name' , 'emailid' , 'country' , 'createdAt' , 'status' , 'Manage'];
 
   constructor(private tokenService: TokenserviceService,
     private customService: CustomerService,
@@ -115,6 +121,8 @@ export class CustomerComponent implements OnInit {
         this.customer = data.data;
         this.page = data.result;
         this.count = this.page.pageno * this.limit + 1;
+        this.datasource = new MatTableDataSource(this.customer);
+        this.datasource.sort = this.sort;
       } else {
         this.validate(data.statusCode);
         alert(data.message);
