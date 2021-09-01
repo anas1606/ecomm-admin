@@ -79,7 +79,7 @@ export class CountryComponent implements OnInit {
       }
       this.countryService.updateStatus(body).subscribe(data => {
         if (data.statusCode == 200)
-          this.country[index].name = name;
+          this.country[index].name = data.data.name;
         this.validate(data.statusCode);
         alert(data.message);
         this.isEdit = false;

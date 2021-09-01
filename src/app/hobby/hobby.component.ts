@@ -79,7 +79,7 @@ export class HobbyComponent implements OnInit {
       }
       this.hobbyService.updateStatus(body).subscribe(data => {
         if (data.statusCode == 200)
-          this.hobby[index].name = name;
+          this.hobby[index].name = data.data.name;
         this.validate(data.statusCode);
         alert(data.message);
         this.isEdit = false;

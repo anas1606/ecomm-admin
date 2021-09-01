@@ -79,7 +79,7 @@ export class CategoryComponent implements OnInit {
       }
       this.categoryService.updateStatus(body).subscribe(data => {
         if (data.statusCode == 200)
-          this.category[index].name = name;
+          this.category[index].name = data.data.name;
         this.validate(data.statusCode);
         alert(data.message);
         this.isEdit = false;
