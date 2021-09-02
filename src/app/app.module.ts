@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
@@ -20,6 +20,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { LoaderComponent } from './loader/loader.component';
+import { HttpInterceptorService } from './http-interceptor.service';
+import { LoaderService } from './loader.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import {MatInputModule} from '@angular/material/input';
     LoginComponent,
     HobbyComponent,
     CategoryComponent,
-    OrderComponent
+    OrderComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,10 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
