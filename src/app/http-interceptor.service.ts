@@ -7,14 +7,16 @@ import { finalize } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class HttpInterceptorService {
+export class HttpInterceptorService implements HttpInterceptor{
 
   constructor(private loaderService:LoaderService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.loaderService.show();
     return next.handle(req).pipe(
-        finalize(() => this.loaderService.hide())
+        finalize(
+            () => this.loaderService.hide()
+          )
     );
   }
 
